@@ -52,7 +52,7 @@ class _addState extends State<add> {
             Text('$age' , style: TextStyle(fontWeight: FontWeight.bold
                 ,fontSize:30.0 ),
             ),
-            SizedBox(height: 30),
+
 
           ],
         ),
