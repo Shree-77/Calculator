@@ -14,7 +14,7 @@ class Calculator extends StatefulWidget {
 class _CalculatorState extends State<Calculator> {
 
   Widget numberButton(String btnText, Color btnColor , Color txtColor){
-    return ElevatedButton(onPressed: () {}, child: Text(
+    return ElevatedButton(onPressed: () => {calculate(btnText)}, child: Text(
       btnText , style: TextStyle(fontSize: 25,color: txtColor),
     ),
       style: ElevatedButton.styleFrom(
@@ -43,10 +43,10 @@ class _CalculatorState extends State<Calculator> {
                 children:[
                 Padding(padding: EdgeInsets.all(10)
                 , child :Text(
-                      "0" , textAlign: TextAlign.left,
+                      text, textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 80,
+                        fontSize: 50,
                       ),
                     )
                 ),
@@ -56,7 +56,7 @@ class _CalculatorState extends State<Calculator> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 numberButton("AC",Colors.grey[600]!, Colors.black),
-                numberButton("[x]",Colors.grey[600]!, Colors.black),
+                numberButton("DE",Colors.grey[600]!, Colors.black),
                 numberButton("%",Colors.grey[600]!, Colors.black),
                 numberButton("/",Colors.orange[600]!, Colors.black),
               ],
@@ -68,7 +68,7 @@ class _CalculatorState extends State<Calculator> {
                   numberButton("7",Colors.grey[600]!, Colors.black),
                   numberButton("8",Colors.grey[600]!, Colors.black),
                   numberButton("9",Colors.grey[600]!, Colors.black),
-                  numberButton("X",Colors.orange[600]!, Colors.black),
+                  numberButton("*",Colors.orange[600]!, Colors.black),
                 ],
             ),
             SizedBox(height: 10),
@@ -107,5 +107,67 @@ class _CalculatorState extends State<Calculator> {
         ),
       ),
     );
+
   }
+  int firstnum =0;
+  int secondnum = 0;
+  String result ="";
+  String text ="";
+  String operation ="";
+
+  void calculate(String btn){
+    if(btn=="AC"){
+      result=" ";
+      text =" ";
+      firstnum=0;
+      secondnum=0;
+    }else if (btn=="+"||btn=="-"|| btn =="*"||btn=="/"||btn=="%"){
+      operation=btn;
+      if(text.isNotEmpty) {
+        firstnum=int.parse(text);
+      }
+      result="";
+    }else if(btn=="DE"){
+      if (text.length > 0) {
+          text = text.substring(0, text.length - 1);
+        }
+        else
+        {
+          text+= btn;
+        }
+    }
+    else if (btn=="="){
+      if(text.isNotEmpty) {
+        secondnum=int.parse(text);
+      }
+      switch(operation){
+        case "+":
+          result=(firstnum+secondnum).toString();
+          break;
+        case "-":
+          result=(firstnum-secondnum).toString();
+          break;
+        case "*":
+          result=(firstnum*secondnum).toString();
+          break;
+        case "/":
+          result=(firstnum/secondnum).toString();
+          break;
+        case "%":
+          result=(firstnum%secondnum).toString();
+          break;
+        default:
+          result ="Error";
+      }
+      firstnum=0;
+      operation="";
+    }
+    else{
+      result+=btn;
+    }
+    setState(() {
+      text=result;
+    });
+  }
+
 }
