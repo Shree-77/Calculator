@@ -1,4 +1,4 @@
-# stateful
+# CALCULATOR
 
 A new Flutter project.
 
